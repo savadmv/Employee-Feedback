@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'dashboard.dart';
+import 'employee_list.dart';
 
 void main() => runApp(MyFirstFlutterApp());
 
@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => DashBoard()));
+                          MaterialPageRoute(builder: (context) => EmployeeList()));
                     },
                     child: new Container(
                       alignment: Alignment.center,
@@ -70,6 +70,19 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+              )
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                height: 40.0,
+                alignment: Alignment.center,
+                child: new Text("Forgot password", style: new TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.normal),),
               )
             ],
           )
