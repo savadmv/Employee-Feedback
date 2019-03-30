@@ -5,6 +5,8 @@ import 'employee_list.dart';
 void main() => runApp(MyFirstFlutterApp());
 
 class MyFirstFlutterApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -13,6 +15,8 @@ class MyFirstFlutterApp extends StatelessWidget {
       home: MyHomePage(),
     );
   }
+
+  MyFirstFlutterApp();
 }
 
 class MyHomePage extends StatelessWidget {
