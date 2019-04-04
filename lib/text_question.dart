@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TextQuestions extends StatelessWidget {
-  final int qs_no;
+  final String qustion;
   ScrollController c=new ScrollController() ;
 
-  TextQuestions(this.qs_no);
+  TextQuestions(this.qustion);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class TextQuestions extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: new Text(
-                                "What are the wuestion to asked ?",
+                               qustion,
                                 style: new TextStyle(
                                     color: Colors.black, fontSize: 28.0),
                               ),
