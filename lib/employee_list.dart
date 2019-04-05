@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'questions.dart';
 
@@ -17,15 +19,18 @@ class EmployeeList extends StatefulWidget {
   EmployeeList();
 }
 class EmployeeListState extends State<EmployeeList> {
-  List<User> users = [];
+
 
   Future<List<User>> _getUsers() async {
-//    var data= await http.get("www.home.in");
-//    var jsonData=json.decode(data.body);
+    var data = await http.get("https://jsonplaceholder.typicode.com/users");
+    var jsonData = json.decode(data.body);
+    List<User> users = [];
     setState(() {
-      for (var i = 0; i < 20; i++) {
+      for (var u in jsonData) {
         User user = new User(
-            1, "Test" + i.toString(), "test" + i.toString() + "@gmail.com");
+
+
+            u[ "id"], u["name"], u[ "username"], u[ "email"]);
         users.add(user);
       }
     });
@@ -105,28 +110,66 @@ class EmployeeListState extends State<EmployeeList> {
                   ],
                 ),
               ),
-              Expanded(
-                child: new Container(
-                  height: 200.0,
-                  child: new ListView.builder(
-                    itemCount:users.length ,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new ListTile(
-                        title: new Text(users[index].user_name),
-                        leading: new CircleAvatar(backgroundColor: Colors.blue,
-                          child: new Text(index.toString()),),
-                        subtitle: new Text(users[index].mail_id),
-                        selected: index == 2 ? true : false,
-                        onTap: () {
-                          Navigator.push(context, new MaterialPageRoute(
-                              builder: (context) => QuestionPage(users[index])));
-                        },
+              FutureBuilder(
+                future: _getUsers(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if(snapshot.data==null){
+                    return new Center(
+                      child: new Text("loading"),
+                    );
 
-                      );
-                    },
-                  ),
-                ),
+                  }
+                  else {
+                    return Expanded(
+                      child: Container(
+                        height: 200.0,
+                        child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return new ListTile(
+                              title: new Text(snapshot.data[index].name),
+                              leading: new CircleAvatar(
+                               backgroundColor: Colors.blue,
+                                child: new Text(snapshot.data[index].id.toString()),),
+                              subtitle: new Text(snapshot.data[index].email),
+                              selected: index == 2 ? true : false,
+                              onTap: () {
+                                Navigator.push(context, new MaterialPageRoute(
+                                    builder: (context) =>
+                                        QuestionPage(snapshot.data[index])));
+                              },
+
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                },
               )
+
+//              Expanded(
+//                child: new Container(
+//                  height: 200.0,
+//                  child: new ListView.builder(
+//                    itemCount:users.length ,
+//                    itemBuilder: (BuildContext context, int index) {
+//                      return new ListTile(
+//                        title: new Text(users[index].user_name),
+//                        leading: new CircleAvatar(backgroundColor: Colors.blue,
+//                          child: new Text(index.toString()),),
+//                        subtitle: new Text(users[index].mail_id),
+//                        selected: index == 2 ? true : false,
+//                        onTap: () {
+//                          Navigator.push(context, new MaterialPageRoute(
+//                              builder: (context) => QuestionPage(users[index])));
+//                        },
+//
+//                      );
+//                    },
+//                  ),
+//                ),
+//              )
 
             ],
 
@@ -139,11 +182,14 @@ class EmployeeListState extends State<EmployeeList> {
 
 
 class User {
+  final String name;
   final int id;
-  final String user_name;
-  final String mail_id;
+  final String username;
+  final String email;
 
-  User(this.id, this.user_name, this.mail_id);
+
+
+  User(this.id, this.name, this.username, this.email);
 }
 
 
