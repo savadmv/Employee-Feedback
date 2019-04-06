@@ -1,7 +1,7 @@
-import 'package:first_flutter_app/employee_list.dart';
+import 'package:first_flutter_app/dashboard.dart';
 import 'package:flutter/material.dart';
-
-import 'employee_list.dart';
+import './pages/employee_list.dart';
+import 'dashboard.dart';
 import 'text_question.dart';
 
 class QuestionPage extends StatelessWidget {

@@ -1,47 +1,35 @@
+import 'package:first_flutter_app/questions.dart';
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'questions.dart';
-
+import './new_page.dart';
 
 
-class EmployeeList extends StatefulWidget {
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return EmployeeListState();
-  }
+class EmplpyeeListPage extends StatefulWidget{
 
-  EmployeeList();
+  _EmplpyeeListPageState createState() => new _EmplpyeeListPageState();
+
+  EmplpyeeListPage();
 }
-class EmployeeListState extends State<EmployeeList> {
 
+class _EmplpyeeListPageState extends State<EmplpyeeListPage> {
 
   Future<List<User>> _getUsers() async {
     var data = await http.get("https://jsonplaceholder.typicode.com/users");
+    print("Syncing..............");
+
     var jsonData = json.decode(data.body);
     List<User> users = [];
-    setState(() {
-      for (var u in jsonData) {
-        User user = new User(
-
-
-            u[ "id"], u["name"], u[ "username"], u[ "email"]);
-        users.add(user);
-      }
-    });
+//    setState(() {
+    for (var u in jsonData) {
+      User user = new User(
+          u[ "id"], u["name"], u[ "username"], u[ "email"]);
+      users.add(user);
+    }
+//    });
     return users;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    this._getUsers();
-    super.initState();
   }
 
   @override
@@ -65,6 +53,9 @@ class EmployeeListState extends State<EmployeeList> {
           child: new ListView(
             children: <Widget>[
               new UserAccountsDrawerHeader(accountName: new Text("Savad mv"),
+                decoration: BoxDecoration(image: DecorationImage(
+                  fit: BoxFit.fill,
+                    image: new NetworkImage("https://picsum.photos/200/300"))),
                 accountEmail: new Text("test@gmail.com"),
                 currentAccountPicture: new CircleAvatar(
                   backgroundColor: Colors.white,
@@ -75,21 +66,25 @@ class EmployeeListState extends State<EmployeeList> {
                 ),),
               new ListTile(
                 title: new Text("Home"),
+                selected: true,
                 trailing: new Icon(Icons.home),
+                onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> new EmplpyeeListPage())),
               ),
               new ListTile(
                 title: new Text("Log out"),
+
                 trailing: new Icon(Icons.arrow_back_ios),
+                onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> new NewPage("Logout Page"))),
               )
             ],
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 16.0,right: 16.0,top: 16.0),
+          padding: const EdgeInsets.only(left: 0.0,right: 0.0,top: 16.0),
           child: new Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8.0),
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -124,21 +119,25 @@ class EmployeeListState extends State<EmployeeList> {
                       child: Container(
                         height: 200.0,
                         child: ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 0.0),
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return new ListTile(
-                              title: new Text(snapshot.data[index].name),
-                              leading: new CircleAvatar(
-                               backgroundColor: Colors.blue,
-                                child: new Text(snapshot.data[index].id.toString()),),
-                              subtitle: new Text(snapshot.data[index].email),
-                              selected: index == 2 ? true : false,
-                              onTap: () {
-                                Navigator.push(context, new MaterialPageRoute(
-                                    builder: (context) =>
-                                        QuestionPage(snapshot.data[index])));
-                              },
+                            return new Card(
+                              margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 0.0),
+                              child: new ListTile(
+                                title: new Text(snapshot.data[index].name),
+                                leading: new CircleAvatar(
+                                  backgroundColor: Colors.blue,
+                                  child: new Text(snapshot.data[index].id.toString()),),
+                                subtitle: new Text(snapshot.data[index].email),
+                                selected: index == 2 ? true : false,
+                                onTap: () {
+                                  Navigator.push(context, new MaterialPageRoute(
+                                      builder: (context) =>
+                                          QuestionPage(snapshot.data[index])));
+                                },
 
+                              ),
                             );
                           },
                         ),
@@ -178,6 +177,8 @@ class EmployeeListState extends State<EmployeeList> {
 
     );
   }
+
+
 }
 
 
@@ -191,5 +192,3 @@ class User {
 
   User(this.id, this.name, this.username, this.email);
 }
-
-

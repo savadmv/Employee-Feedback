@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'employee_list.dart';
+import 'dashboard.dart';
 
 void main() => runApp(MyFirstFlutterApp());
 
@@ -56,7 +56,7 @@ class MyHomePage extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => EmployeeList()));
+                          MaterialPageRoute(builder: (context) => Dashboard()));
                     },
                     child: new Container(
                       alignment: Alignment.center,
