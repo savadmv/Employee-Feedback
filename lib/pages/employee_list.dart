@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import './new_page.dart';
+import './sliver_layout.dart';
+import './grid_layout.dart';
 
 
 
@@ -40,11 +41,11 @@ class _EmplpyeeListPageState extends State<EmplpyeeListPage> {
           title: new Text("Emporio Kannur"),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 0.0),
               child: new Icon(Icons.arrow_back_ios),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 0.0),
               child: new Icon(Icons.refresh),
             )
           ],
@@ -71,11 +72,18 @@ class _EmplpyeeListPageState extends State<EmplpyeeListPage> {
                 onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> new EmplpyeeListPage())),
               ),
               new ListTile(
-                title: new Text("Log out"),
+                title: new Text("Sliver layout"),
 
-                trailing: new Icon(Icons.arrow_back_ios),
-                onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> new NewPage("Logout Page"))),
+                trailing: new Icon(Icons.list),
+                onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> new SliverLayout("Logout Page"))),
+              ),
+              new ListTile(
+                title: new Text("Grid Layout"),
+
+                trailing: new Icon(Icons.grid_on),
+                onTap: ()=> Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> new GridLayout())),
               )
+
             ],
           ),
         ),

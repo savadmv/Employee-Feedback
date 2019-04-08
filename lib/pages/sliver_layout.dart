@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
 import 'employee_list.dart';
 
-class NewPage extends StatefulWidget{
+class SliverLayout extends StatefulWidget{
   String pageTitle;
 
 
 
 
-  NewPage(this.pageTitle);
+  SliverLayout(this.pageTitle);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _NewPageState(pageTitle);
+    return _SliverLayoutState(pageTitle);
   }
 
 
 }
 
-class _NewPageState extends State<NewPage> {
+class _SliverLayoutState extends State<SliverLayout> {
 
   String pageTitle;
 
-  List<String> userImages=["http://placeimg.com/256/256/people","http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people","http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/156/256/people",
-  "http://placeimg.com/256/256/people","http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/246/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people","http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/256/256/people",
-  "http://placeimg.com/251/256/people"];
+
+  @override
+  void initState() {
+    getImages();
+  }
+
+  List<String> userImages=[];
+  List<String> getImages(){
+    for (var i = 0; i < 18; i++) {
+      userImages.add("http://placeimg.com/"+(480+i).toString()+"/"+(480+i).toString()+"/tech");
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,5 +67,5 @@ class _NewPageState extends State<NewPage> {
     );
   }
 
-  _NewPageState(this.pageTitle);
+  _SliverLayoutState(this.pageTitle);
 }
